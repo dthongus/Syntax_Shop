@@ -1,15 +1,18 @@
-// Modul mit einer Klasse für die Hauptkategorieliste
-
-import java.sql.Connection // Bibliothek zur Interaktion zwischen Programm und Datenbank
-import java.sql.DriverManager // Klasse zur Herstellung der Datenbankverbindung
+// Modul mit einer Klasse für die Erzeugung der Hauptkategorieliste
 
 
-// Klasse für die Erstellung der Produktliste in der Hauptkategorie
+// Connection Bibliothek dient zur Interaktion zwischen Programm und Datenbank
+import java.sql.Connection
+// DriverManager ist eine Klasse zur Herstellung der Datenbankverbindung
+import java.sql.DriverManager 
+
+
+// Klasse, die den Kategorienamen aufnimmt.
 class MainCategory(val name: String) {
 
     companion object {
 
-        // Funktion zur Erstellung einer Liste die mit Daten aus der Datenbank befüllt wird
+        // Funktion, die zugehörigen Daten aus der Datenbank in eine Liste speichert und zurückgibt
         fun getAllCategories(): List<MainCategory> {
 
             // Liste für Hauptkategorie erstellen
@@ -21,7 +24,7 @@ class MainCategory(val name: String) {
             val statement = connection.createStatement()
             val resultSet = statement.executeQuery(query)
 
-            // Holt Daten zur Hauptkategorie, solange Daten in der Tabelle vorhanden sind und fügt diese in die Liste hinzu.
+            // Holt Daten der Hauptkategorie, solange Daten in der Tabelle vorhanden sind und fügt diese in die Liste hinzu.
             while (resultSet.next()) {
                 val name = resultSet.getString("name")
                 categories.add(MainCategory(name))
@@ -31,6 +34,7 @@ class MainCategory(val name: String) {
             statement.close()
             connection.close()
 
+            // Rückgabe der Kategorieliste
             return categories
         }
     }
